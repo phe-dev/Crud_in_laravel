@@ -9,17 +9,11 @@ use Illuminate\Support\Facades\Route;
 
 //Route :: view('/jogos', 'jogos');
 
-//Route ::view ('/jogos', 'jogos', ['name' =>'GTA']);
-
-//Route ::get ('/jogos/{name?}',  function($name = null){
-  //  return view ('jogos',['nomeJogo'=>$name]);
-//}) ->where('name', '(A-Za-z) +');
-
-Route :: get('/jogos', [JogosController::class, 'index']);
-
-Route::get('/casa', function () {
-    return view('welcome');
-}) ->name('home-index');
+Route::prefix('jogos')->group(function(){
+  Route::get('/', [JogosController::class,'index'])->name('jogos-index');
+  Route::get('/create', [JogosController::class,'create'])->name('jogos-create');
+  Route::post('/', [JogosController::class,'store'])->name('jogos-store');
+});
 
 Route::fallback( function () {
   return "Error";
